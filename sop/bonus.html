@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonus Team SOP</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            themeVariables: {
+                fontSize: '12px',
+                fontFamily: 'Roboto, sans-serif',
+            },
+            flowchart: {
+                useMaxWidth: false
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Bonus Team SOP 🎁</h1>
+            <p>Guidelines for managing bonus programs, monitoring for abuse, and assisting CS agents with bonus inquiries.</p>
+            <button class="back-button" onclick="goBack()">🔙 Back to Dashboard</button>
+        </div>
+    </header>
+
+    <section class="sop-content">
+        <div class="sop-summary-wrapper">
+        <h2>Summary</h2>
+        <p class="sop-text">The Bonus Team SOP covers procedures for applying bonuses, detecting potential abuse, and verifying eligibility.</p>
+
+        <h3>Key Advice</h3>
+        <ul class="sop-text">
+            <li>Verify promotion details before adding bonuses.</li>
+            <li>Tag KYC Team if multiple accounts are suspected.</li>
+            <li>Assist CS with user inquiries related to specific promotions.</li>
+        </ul>
+        </div>
+
+        <h2>Workflow Diagram</h2>
+        <div class="flowchart-container">
+            <pre id="flowchartZoomContainer" class="mermaid">
+                flowchart TD
+                A[Receive Inquiry from CS] --> B[Check User Account for Multiple IPs / Multiple Accounts / Multiple Usernames / Suspicious Behavior]
+                B --> C{Is Multiple Accounts Used or Suspected?}
+                
+                C -->|Yes| D[Tag KYC Team for Further Review]
+                D --> E{KYC Team Decision}
+                
+                E -->|Ban User| F[KYC Team Bans User and Ends Process]
+                E -->|Approve for Bonus| G[Bonus Team Continues with Bonus Process]
+            
+                C -->|No| H[Proceed with Next Steps]
+                H --> I[Check Promotion Details]
+                I --> J[Check User Eligibility]
+                J --> K[Add Bonus According to Promotion / Referral Code]
+                
+                G --> I
+            </pre>
+        </div>
+    </section>
+
+    <script src="../script.js"></script>
+</body>
+</html>

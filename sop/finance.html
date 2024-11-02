@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Team SOP</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            themeVariables: {
+                fontSize: '12px',
+                fontFamily: 'Roboto, sans-serif',
+            },
+            flowchart: {
+                useMaxWidth: false
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Finance Team SOP 💸</h1>
+            <p>Guidelines for managing user transactions, monitoring for fraud, and handling deposit/withdrawal issues.</p>
+            <button class="back-button" onclick="goBack()">🔙 Back to Dashboard</button>
+        </div>
+    </header>
+
+    <section class="sop-content">
+        
+        <div class="sop-summary-wrapper">
+        <h2>Summary</h2>
+        <p class="sop-text">The Finance Team SOP focuses on overseeing user transactions, addressing deposit and withdrawal inquiries, and identifying suspicious account behaviors.</p>
+
+        <h3>Key Advice</h3>
+        <ul class="sop-text">
+            <li>Verify transaction details before taking action.</li>
+            <li>Clearly communicate with users, especially for irrecoverable issues.</li>
+            <li>Escalate cases with multiple-account evidence to the KYC team.</li>
+        </ul>
+        </div>
+
+        <h2>Workflow Diagram</h2>
+        <div class="flowchart-container">
+            <pre id="flowchartZoomContainer" class="mermaid">
+                flowchart TD
+                A[Receive Inquiry from CS Agent] --> B{Identify Type of Inquiry}
+            
+                B -->|Withdrawal| G[Check for Multi-IP/Name/KYC]
+                G --> H{Evidence of Multi-Account?}
+                H -->|Yes| I[Tag KYC Team for Review]
+                H -->|No| J[Approve Withdrawal and Inform CS]
+            
+                B -->|Deposit| K[Check Deposit Details]
+                K --> L{Issue Found?}
+                L -->|No| M[Deposit Credited and Inform CS]
+                L -->|Yes| N{Type of Issue}
+                N -->|Wrong Network| O[Inform User: Irrecoverable]
+                N -->|Incorrect Address| P[Inform User: Irrecoverable]
+                N -->|Smart Contract| Q[Inform User: Irrecoverable]
+                N -->|Pending Confirmations| R[Wait for Additional Confirmations]
+            
+                B -->|Balance| S[Verify Balance/Conversion]
+                S --> T[Assist with Adjustment or Explanation]
+            
+                M --> U[Close Inquiry]
+                O --> U
+                P --> U
+                Q --> U
+                R --> U
+                I --> U
+                T --> U
+                J --> U              
+            </pre>
+        </div>
+    </section>
+
+    <script src="../script.js"></script>
+</body>
+</html>

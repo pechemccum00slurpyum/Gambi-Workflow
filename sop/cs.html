@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Team SOP</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            themeVariables: {
+                fontSize: '12px',
+                fontFamily: 'Roboto, sans-serif',
+            },
+            flowchart: {
+                useMaxWidth: false
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>CS Team SOP 📞</h1>
+            <p>Guidelines for handling user inquiries, tagging teams, and follow-up processes.</p>
+            <button class="back-button" onclick="goBack()">🔙 Back to Dashboard</button>
+        </div>
+    </header>
+
+    <section class="sop-content">
+        <div class="sop-summary-wrapper">
+        <h2>Summary</h2>
+        <p class="sop-text">The CS Team SOP focuses on managing user inquiries, escalating to relevant teams when necessary, and ensuring efficient responses to user issues.</p>
+
+        <h3>Key Advice</h3>
+        <ul class="sop-text">
+            <li>Tag the correct team based on the inquiry type.</li>
+            <li>Provide clear and concise information to users.</li>
+            <li>Follow up on escalated cases to ensure resolution.</li>
+        </ul>
+        </div>
+
+        <h2>Workflow Diagram</h2>
+        <div class="flowchart-container">
+            <pre id="flowchartZoomContainer" class="mermaid">
+                flowchart TD
+                A[Receive User Inquiry] --> B{Identify Type of Inquiry}
+                
+                %% Bonus Inquiry Workflow
+                B -->|Bonus Inquiry| C[Has User Specified Promotion?]
+                C -->|Yes| D[Tag Bonus Team for Review]
+                C -->|No| E[Ask User for Promotion Details]
+                
+                %% Withdrawal Inquiry Workflow
+                B -->|Withdrawal Inquiry| F[Has User Made/Initiated Withdrawal?]
+                F -->|Yes| G[Tag Finance Team for Review]
+                F -->|No| H[Answer General Withdrawal Questions]
+                
+                %% Deposit Inquiry Workflow
+                B -->|Deposit Inquiry| I[Does Deposit Require Additional Checks?]
+                I -->|Yes| J[Tag Finance Team for Review]
+                I -->|No| K[Answer General Deposit Questions]
+                
+                %% KYC/Verification Inquiry Workflow
+                B -->|KYC/Verification Inquiry| L[Has KYC Submission Exceeded 24 Hours?]
+                L -->|Yes| M[Tag KYC Team for Review]
+                L -->|No| N[Inform User to Wait for KYC Processing]
+                
+                %% Other Inquiry Workflow
+                B -->|Other Inquiry| Q{Can You Handle Based on Knowledge?}
+                Q -->|Yes| R[Handle Case and Inform User]
+                Q -->|No| S[Escalate to Group Chat for Assistance]
+                
+                %% Outcome and Closure
+                D --> O[Inform User of Outcome or Next Steps]
+                G --> O
+                J --> O
+                M --> O
+                R --> O
+                O --> P[Close Inquiry]
+                H --> P
+                K --> P
+                N --> P
+                E --> P
+                S --> P            
+            </pre>
+        </div>
+    </section>
+
+    <script src="../script.js"></script>
+</body>
+</html>

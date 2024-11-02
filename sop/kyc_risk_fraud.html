@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC/Risk/Fraud Team SOP</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            themeVariables: {
+                fontSize: '12px',
+                fontFamily: 'Roboto, sans-serif',
+            },
+            flowchart: {
+                useMaxWidth: false
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>KYC/Risk/Fraud Team SOP 🔒</h1>
+            <p>Guidelines for identifying, investigating, and handling high-risk activities with the KYC, Risk, and Fraud teams.</p>
+            <button class="back-button" onclick="goBack()">🔙 Back to Dashboard</button>
+        </div>
+    </header>
+
+    <section class="sop-content">
+        <div class="sop-summary-wrapper">
+        <h2>Summary</h2>
+        <p class="sop-text">This SOP outlines the responsibilities of the KYC, Risk, and Fraud teams in handling high-risk activities and suspicious accounts.</p>
+
+        <h3>Key Advice</h3>
+        <ul class="sop-text">
+            <li>Collaborate closely with each team to identify suspicious behavior.</li>
+            <li>Document findings and actions taken for transparency.</li>
+            <li>Follow escalation protocols for unresolved cases.</li>
+        </ul>
+        </div>
+
+        <h2>Workflow Diagram</h2>
+        <div class="flowchart-container">
+            <pre id="flowchartZoomContainer" class="mermaid">
+                flowchart TD
+                A[Receive Escalation from CS/Bonus/Finance] --> B[Check User Request]
+                B --> C[Assess User Account Details]
+                
+                %% Details Checking Workflow
+                C --> D[Review Related IPs/Documents/Names/Other Details]
+                D --> E{Are Multiple Accounts Confirmed?}
+                
+                %% Multiple Accounts Confirmed Workflow
+                E -->|Yes, Same ID Documents| F[Ban All Related Users Permanently]
+                E -->|No, Related by IP/Names/Other| G[Set Accounts to Passive Mode and Request Documents]
+                E -->|No Multi-Account Suspicion| N[Check for Other Suspicious Activity or Behavior]
+                
+                %% Document Request Workflow for Related but Not Same-Document Users
+                G --> H[Request Selfie+ID+Gambi Paper from Each Related User]
+                H --> I{Are Users the Same Person?}
+                
+                %% Decision Based on Document Verification
+                I -->|Yes| J[Ban All Accounts Permanently]
+                I -->|No| K[Allow Accounts to Remain Active]
+                
+                %% No Multi-Account Suspicion Workflow
+                N --> O{Any Suspicious Activity Detected?}
+                O -->|Yes| P[Flag for Further Investigation and Escalate if Necessary]
+                O -->|No| Q[Allow Account to Remain Active and Inform Escalating Team]
+                
+                %% Final Decision Workflow
+                F --> L[Update Records and Finalize Ban]
+                J --> L
+                K --> M[Provide Final Response to CS/Bonus/Finance]
+                P --> M
+                Q --> M
+                L --> M
+            
+            </pre>
+        </div>
+    </section>
+
+    <script src="../script.js"></script>
+</body>
+</html>
