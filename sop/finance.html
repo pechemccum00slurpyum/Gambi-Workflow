@@ -46,33 +46,49 @@
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
                 flowchart TD
-                A[Receive Inquiry from CS Agent] --> B{Identify Type of Inquiry}
-            
-                B -->|Withdrawal| G[Check for Multi-IP/Name/KYC]
-                G --> H{Evidence of Multi-Account?}
-                H -->|Yes| I[Tag KYC Team for Review]
-                H -->|No| J[Approve Withdrawal and Inform CS]
-            
-                B -->|Deposit| K[Check Deposit Details]
-                K --> L{Issue Found?}
-                L -->|No| M[Deposit Credited and Inform CS]
-                L -->|Yes| N{Type of Issue}
-                N -->|Wrong Network| O[Inform User: Irrecoverable]
-                N -->|Incorrect Address| P[Inform User: Irrecoverable]
-                N -->|Smart Contract| Q[Inform User: Irrecoverable]
-                N -->|Pending Confirmations| R[Wait for Additional Confirmations]
-            
-                B -->|Balance| S[Verify Balance/Conversion]
-                S --> T[Assist with Adjustment or Explanation]
-            
-                M --> U[Close Inquiry]
-                O --> U
-                P --> U
-                Q --> U
-                R --> U
-                I --> U
-                T --> U
-                J --> U              
+    A[Receive Inquiry from CS Agent] --> B{Identify Type of Inquiry}
+    
+    %% Withdrawal Inquiry Workflow
+    B -->|Withdrawal| G[Check for Multi-IP/Name/Other Suspicious Indicators]
+    G --> H{Evidence of Abuse or Suspicion?}
+    H -->|Yes| I[Ban User and Document Case]
+    H -->|No| J[Approve Withdrawal and Inform CS]
+    
+    %% Deposit Inquiry Workflow
+    B -->|Deposit| K[Check Deposit Details]
+    K --> L{Issue Found?}
+    L -->|No| M[Deposit Credited and Inform CS]
+    L -->|Yes| N{Type of Issue}
+    N -->|Wrong Network| O[Inform User: Irrecoverable]
+    N -->|Incorrect Address| P[Inform User: Irrecoverable]
+    N -->|Smart Contract| Q[Inform User: Irrecoverable]
+    N -->|Pending Confirmations| R[Wait for Additional Confirmations]
+    
+    %% Balance Inquiry Workflow
+    B -->|Balance| S[Verify Balance/Conversion]
+    S --> T[Assist with Adjustment or Explanation]
+    
+    %% Other Inquiry Workflow
+    B -->|Others| U{Check if Bonus or Other Issue}
+    U -->|Bonus| V[Tag Bonus Team for Review]
+    U -->|Other| W[Check for Abuse or Suspicious Behavior]
+    W --> X{Valid Evidence of Abuse?}
+    X -->|Yes| Y[Ban User and Document Case]
+    X -->|No| Z[Escalate to Higher Department if Needed]
+
+    %% Outcome and Closure
+    M --> AA[Close Inquiry]
+    O --> AA
+    P --> AA
+    Q --> AA
+    R --> AA
+    I --> AA
+    T --> AA
+    J --> AA
+    Y --> AA
+    V --> AA
+    Z --> AA
+
             </pre>
         </div>
     </section>
