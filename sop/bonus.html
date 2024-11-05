@@ -44,31 +44,31 @@
         <h2>Workflow Diagram</h2>
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
-                flowchart TD
+               flowchart TD
     A[Receive Inquiry from CS] --> B[Check User Account for IP Country, IP Relations, Same Documents, Usernames, High-Risk Emails]
     
-    B --> C{Any Matches Detected?}
+    B --> C{Any Matches Detected or High-Risk Indicators?}
     
-    %% Matches Detected Workflow
+    %% High-Risk or Match Detected Workflow
     C -->|Yes| D[Investigate Potential Abuse Among Related Users]
     D --> E{Is There Matching ID Across Related Users?}
     
     %% Permanent Ban for ID Match
     E -->|Yes| F[Ban All Related Users Permanently; Document Reason in User's Notes]
     
-    %% Temporary Ban and Document Verification for Non-ID Matches
-    E -->|No| G[Temporarily Ban All Users; Request Selfie with ID and Gambi Paper]
+    %% Temporary Ban and Document Verification for Non-ID Matches or High-Risk Indicators
+    E -->|No ID Match or High-Risk Indicators Only| G[Temporarily Suspend User; Request ID, Selfie, and Gambi Paper]
     G --> H[User Submits Documentation]
     H --> I[Review Submitted Documents]
     
     %% Final Decision Based on Document Check
     I --> J{Does Submitted Document Match Any Other Related Users' ID?}
     J -->|Yes| F
-    J -->|No| K[Unban Users and Allow Continued Account Usage; Document Decision in User's Notes]
-    
-    %% No Matches Detected Workflow
+    J -->|No| K[Allow User to Continue Usage of Account; Document Decision in User's Notes]
+
+    %% No Matches or High-Risk Indicators Detected Workflow
     C -->|No| L[No Abuse Detected; Allow User to Continue]
-    
+
     %% Escalation for Uncertain Cases
     B -->|Uncertain Case| M[Escalate to Higher Department for Further Review]
 
