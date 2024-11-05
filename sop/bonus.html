@@ -68,15 +68,18 @@
 
     %% No Matches or High-Risk Indicators Detected Workflow
     C -->|No| L[No Abuse Detected; Allow User to Continue]
+    L --> M[Check Promotion Details]
+    M --> N[Check User Eligibility]
+    N --> O[Add Bonus According to Promotion/Referral Code]
 
     %% Escalation for Uncertain Cases
-    B -->|Uncertain Case| M[Escalate to Higher Department for Further Review]
+    B -->|Uncertain Case| P[Escalate to Higher Department for Further Review]
 
     %% Outcome and Closure
-    F --> N[Document Decision and Close Inquiry]
-    K --> N
-    L --> N
-    M --> N
+    F --> Q[Document Decision and Close Inquiry]
+    K --> Q
+    O --> Q
+    P --> Q
 
             </pre>
         </div>
