@@ -45,21 +45,39 @@
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
                 flowchart TD
-                A[Receive Inquiry from CS] --> B[Check User Account for Multiple IPs / Multiple Accounts / Multiple Usernames / Suspicious Behavior]
-                B --> C{Is Multiple Accounts Used or Suspected?}
-                
-                C -->|Yes| D[Tag KYC Team for Further Review]
-                D --> E{KYC Team Decision}
-                
-                E -->|Ban User| F[KYC Team Bans User and Ends Process]
-                E -->|Approve for Bonus| G[Bonus Team Continues with Bonus Process]
-            
-                C -->|No| H[Proceed with Next Steps]
-                H --> I[Check Promotion Details]
-                I --> J[Check User Eligibility]
-                J --> K[Add Bonus According to Promotion / Referral Code]
-                
-                G --> I
+    A[Receive Inquiry from CS] --> B[Check User Account for IP Country, IP Relations, Same Documents, Usernames, High-Risk Emails]
+    
+    B --> C{Any Matches Detected?}
+    
+    %% Matches Detected Workflow
+    C -->|Yes| D[Investigate Potential Abuse Among Related Users]
+    D --> E{Is There Matching ID Across Related Users?}
+    
+    %% Permanent Ban for ID Match
+    E -->|Yes| F[Ban All Related Users Permanently; Document Reason in User's Notes]
+    
+    %% Temporary Ban and Document Verification for Non-ID Matches
+    E -->|No| G[Temporarily Ban All Users; Request Selfie with ID and Gambi Paper]
+    G --> H[User Submits Documentation]
+    H --> I[Review Submitted Documents]
+    
+    %% Final Decision Based on Document Check
+    I --> J{Does Submitted Document Match Any Other Related Users' ID?}
+    J -->|Yes| F
+    J -->|No| K[Unban Users and Allow Continued Account Usage; Document Decision in User's Notes]
+    
+    %% No Matches Detected Workflow
+    C -->|No| L[No Abuse Detected; Allow User to Continue]
+    
+    %% Escalation for Uncertain Cases
+    B -->|Uncertain Case| M[Escalate to Higher Department for Further Review]
+
+    %% Outcome and Closure
+    F --> N[Document Decision and Close Inquiry]
+    K --> N
+    L --> N
+    M --> N
+
             </pre>
         </div>
     </section>
