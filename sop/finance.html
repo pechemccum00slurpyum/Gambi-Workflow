@@ -45,13 +45,13 @@
         <h2>Workflow Diagram</h2>
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
-               flowchart TD
+              flowchart TD
     A[Receive Inquiry from CS Agent] --> B{Identify Type of Inquiry}
     
     %% Withdrawal Inquiry Workflow
     B -->|Withdrawal| G[Check for Multi-IP/Name/Other Suspicious Indicators]
     G --> H{Evidence of Abuse or Suspicion?}
-    H -->|Yes| I[Ban or Restrict User Based on Abuse Type, Document Reason in User Account]
+    H -->|Yes| I[Ban or Restrict User Based on Abuse Type, Document Reason in User's Account Notes]
     H -->|No| J[Approve Withdrawal and Inform CS]
     
     %% Deposit Inquiry Workflow
@@ -73,7 +73,7 @@
     U -->|Bonus| V[Tag Bonus Team for Review]
     U -->|Other| W[Check for Abuse or Suspicious Behavior]
     W --> X{Valid Evidence of Abuse?}
-    X -->|Yes| Y[Ban or Restrict User Based on Abuse Type, Document Reason in User Account]
+    X -->|Yes| Y[Ban or Restrict User Based on Abuse Type, Document Reason in User's Account Notes]
     X -->|No| Z[Escalate to Higher Department if Needed]
 
     %% Outcome and Closure
@@ -88,7 +88,6 @@
     Y --> AA
     V --> AA
     Z --> AA
-
             </pre>
         </div>
     </section>
