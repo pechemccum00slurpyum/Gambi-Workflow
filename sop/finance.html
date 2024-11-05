@@ -51,11 +51,11 @@
     %% Withdrawal Inquiry Workflow
     B -->|Withdrawal| G[Check for Multi-IP/Name/Other Suspicious Indicators]
     G --> H{Evidence of Abuse or Suspicion?}
-    H -->|Yes| I[Ban or Restrict User Based on Abuse Type, Document Reason in User's Account Notes]
+    H -->|Yes| I[Ban or Restrict User Based on Abuse Type; Document Reason in User's Notes]
     H -->|No| J[Approve Withdrawal and Inform CS]
     
-    %% Deposit Inquiry Workflow
-    B -->|Deposit| K[Check Deposit Details]
+    %% Crypto Deposit Inquiry Workflow
+    B -->|Crypto Deposit| K[Check Crypto Deposit Details]
     K --> L{Issue Found?}
     L -->|No| M[Deposit Credited and Inform CS]
     L -->|Yes| N{Type of Issue}
@@ -64,30 +64,39 @@
     N -->|Smart Contract| Q[Inform User: Irrecoverable]
     N -->|Pending Confirmations| R[Wait for Additional Confirmations]
     
+    %% Fiat Deposit Inquiry Workflow
+    B -->|Fiat Deposit| S[Check Fiat Deposit Details]
+    S --> T{Is Bank Statement Required?}
+    T -->|Yes| U[Request Bank Statement from User]
+    T -->|No| V[Credit Deposit and Inform CS]
+    U --> V
+
     %% Balance Inquiry Workflow
-    B -->|Balance| S[Verify Balance/Conversion]
-    S --> T[Assist with Adjustment or Explanation]
+    B -->|Balance| W[Verify Balance/Conversion]
+    W --> X[Assist with Adjustment or Explanation]
     
     %% Other Inquiry Workflow
-    B -->|Others| U{Check if Bonus or Other Issue}
-    U -->|Bonus| V[Tag Bonus Team for Review]
-    U -->|Other| W[Check for Abuse or Suspicious Behavior]
-    W --> X{Valid Evidence of Abuse?}
-    X -->|Yes| Y[Ban or Restrict User Based on Abuse Type, Document Reason in User's Account Notes]
-    X -->|No| Z[Escalate to Higher Department if Needed]
+    B -->|Others| Y{Check if Bonus or Other Issue}
+    Y -->|Bonus| Z[Tag Bonus Team for Review]
+    Y -->|Other| AA[Check for Abuse or Suspicious Behavior]
+    AA --> AB{Valid Evidence of Abuse?}
+    AB -->|Yes| AC[Ban or Restrict User Based on Abuse Type; Document Reason in User's Notes]
+    AB -->|No| AD[Escalate to Higher Department if Needed]
 
     %% Outcome and Closure
-    M --> AA[Close Inquiry]
-    O --> AA
-    P --> AA
-    Q --> AA
-    R --> AA
-    I --> AA
-    T --> AA
-    J --> AA
-    Y --> AA
-    V --> AA
-    Z --> AA
+    M --> AE[Close Inquiry]
+    O --> AE
+    P --> AE
+    Q --> AE
+    R --> AE
+    I --> AE
+    X --> AE
+    J --> AE
+    AC --> AE
+    V --> AE
+    Z --> AE
+    AD --> AE
+
             </pre>
         </div>
     </section>
