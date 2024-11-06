@@ -45,50 +45,50 @@
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
                  flowchart TD
-                A[Receive User Inquiry] --> B{Identify Type of Inquiry}
-                
-                %% Bonus Inquiry Workflow
-                B -->|Bonus Inquiry| C[Has User Specified Promotion?]
-                C -->|Yes| D[Tag Bonus Team for Review]
-                C -->|No| E[Specify Promotion Type with User]
-                E --> F[User Specifies Promotion Type]
-                F --> D
-                
-                %% Withdrawal Inquiry Workflow
-                B -->|Withdrawal Inquiry| G[Has User Made/Initiated Withdrawal?]
-                G -->|Yes| H[Tag Finance Team for Review]
-                G -->|No| I[Answer General Withdrawal Questions]
-                
-                %% Deposit Inquiry Workflow
-                B -->|Deposit Inquiry| J[Does Deposit Require Additional Checks?]
-                J -->|Yes| K[Tag Finance Team for Review]
-                J -->|No| L[Answer General Deposit Questions]
-                
-                %% KYC/Verification Inquiry Workflow
-                B -->|KYC/Verification Inquiry| M[Has KYC Submission Exceeded 24 Hours?]
-                M -->|Yes| N[Tag KYC Team for Review]
-                M -->|No| O[Inform User to Wait for KYC Processing]
-                
-                %% Other Inquiry Workflow
-                B -->|Other Inquiry| P{Can You Handle Based on Knowledge?}
-                P -->|Yes| Q[Handle Case and Inform User]
-                P -->|No| R[Escalate to Group Chat for Assistance]
-                
-                %% Outcome and Closure
-                D --> S[Wait for Response from Relevant Team]
-                H --> S
-                K --> S
-                N --> S
-                Q --> S
-                R --> S
-                
-                S --> T{Response Received Within 1 Hour?}
-                T -->|Yes| U[Inform User of Outcome or Next Steps] --> V[Close Inquiry]
-                T -->|No| W[Ask User to Contact Again in 24 Hours for Update] --> V
-                I --> V
-                L --> V
-                O --> V
-                E --> V
+    A[Receive User Inquiry] --> B{Identify Type of Inquiry}
+    
+    %% Bonus Inquiry Workflow
+    B -->|Bonus Inquiry| C[Has User Specified Promotion?]
+    C -->|Yes| D[Tag Bonus Team for Review]
+    C -->|No| E[Ask User for Promotion Details]
+    
+    %% Withdrawal Inquiry Workflow
+    B -->|Withdrawal Inquiry| F[Is the Inquiry About a Failed Withdrawal?]
+    F -->|Yes| G[Check "Rejected Withdrawals" Group in Slack]
+    G --> H{Info Available in Rejected Withdrawals?}
+    H -->|Yes| I[Inform User Accordingly]
+    H -->|No| J[Escalate to "Gambi Transactions" Slack Group]
+    F -->|No| K[Answer General Withdrawal Questions]
+    
+    %% Deposit Inquiry Workflow
+    B -->|Deposit Inquiry| L[Does Deposit Require Additional Checks?]
+    L -->|Yes| M[Tag Finance Team for Review]
+    L -->|No| N[Answer General Deposit Questions]
+    
+    %% KYC/Verification Inquiry Workflow
+    B -->|KYC/Verification Inquiry| O[Has KYC Submission Exceeded 24 Hours?]
+    O -->|Yes| P[Tag KYC Team for Review]
+    O -->|No| Q[Inform User to Wait for KYC Processing]
+    
+    %% Other Inquiry Workflow
+    B -->|Other Inquiry| R{Can You Handle Based on Knowledge?}
+    R -->|Yes| S[Handle Case and Inform User]
+    R -->|No| T[Escalate to Group Chat for Assistance]
+    
+    %% Outcome and Closure
+    D --> U[Inform User of Outcome or Next Steps]
+    I --> U
+    J --> U
+    M --> U
+    P --> U
+    S --> U
+    U --> V[Close Inquiry]
+    K --> V
+    N --> V
+    Q --> V
+    E --> V
+    T --> V
+
             
             </pre>
         </div>
