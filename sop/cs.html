@@ -44,50 +44,56 @@
         <h2>Workflow Diagram</h2>
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
-                 flowchart TD
+                flowchart TD
     A[Receive User Inquiry] --> B{Identify Type of Inquiry}
     
     %% Bonus Inquiry Workflow
     B -->|Bonus Inquiry| C[Has User Specified Promotion?]
     C -->|Yes| D[Tag Bonus Team for Review]
-    C -->|No| E[Ask User for Promotion Details]
+    C -->|No| E[Specify Promotion Type with User]
+    E --> F[User Specifies Promotion Type]
+    F --> D
     
     %% Withdrawal Inquiry Workflow
-    B -->|Withdrawal Inquiry| F[Is the Inquiry About a Failed Withdrawal?]
-    F -->|Yes| G[Check "Rejected Withdrawals" Group in Slack]
-    G --> H{Info Available in Rejected Withdrawals?}
-    H -->|Yes| I[Inform User Accordingly]
-    H -->|No| J[Escalate to "Gambi Transactions" Slack Group]
-    F -->|No| K[Answer General Withdrawal Questions]
+    B -->|Withdrawal Inquiry| G[Is the Inquiry About a Failed Withdrawal?]
+    G -->|Yes| H[Check "Rejected Withdrawals" Group in Slack]
+    H --> I{Info Available in Rejected Withdrawals?}
+    I -->|Yes| J[Inform User Accordingly]
+    I -->|No| K[Escalate to "Gambi Transactions" Slack Group]
+    G -->|No| L[Answer General Withdrawal Questions]
     
     %% Deposit Inquiry Workflow
-    B -->|Deposit Inquiry| L[Does Deposit Require Additional Checks?]
-    L -->|Yes| M[Tag Finance Team for Review]
-    L -->|No| N[Answer General Deposit Questions]
+    B -->|Deposit Inquiry| M[Does Deposit Require Additional Checks?]
+    M -->|Yes| N[Tag Finance Team for Review]
+    M -->|No| O[Answer General Deposit Questions]
     
     %% KYC/Verification Inquiry Workflow
-    B -->|KYC/Verification Inquiry| O[Has KYC Submission Exceeded 24 Hours?]
-    O -->|Yes| P[Tag KYC Team for Review]
-    O -->|No| Q[Inform User to Wait for KYC Processing]
+    B -->|KYC/Verification Inquiry| P[Has KYC Submission Exceeded 24 Hours?]
+    P -->|Yes| Q[Tag Relevant Team (Finance or Higher Department) for Review]
+    P -->|No| R[Inform User to Wait for KYC Processing]
     
     %% Other Inquiry Workflow
-    B -->|Other Inquiry| R{Can You Handle Based on Knowledge?}
-    R -->|Yes| S[Handle Case and Inform User]
-    R -->|No| T[Escalate to Group Chat for Assistance]
+    B -->|Other Inquiry| S{Can You Handle Based on Knowledge?}
+    S -->|Yes| T[Handle Case and Inform User]
+    S -->|No| U[Escalate to Group Chat for Assistance]
     
     %% Outcome and Closure
-    D --> U[Inform User of Outcome or Next Steps]
-    I --> U
-    J --> U
-    M --> U
-    P --> U
-    S --> U
-    U --> V[Close Inquiry]
+    D --> V[Wait for Response from Relevant Team]
+    J --> V
     K --> V
     N --> V
     Q --> V
-    E --> V
     T --> V
+    U --> V
+    
+    V --> W{Response Received Within 1 Hour?}
+    W -->|Yes| X[Inform User of Outcome or Next Steps] --> Y[Close Inquiry]
+    W -->|No| Z[Ask User to Contact Again in 24 Hours for Update] --> Y
+    L --> Y
+    O --> Y
+    R --> Y
+    E --> Y
+
 
             
             </pre>
