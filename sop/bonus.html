@@ -44,7 +44,7 @@
         <h2>Workflow Diagram</h2>
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
-                flowchart TD
+                 flowchart TD
                 A[Receive Inquiry from CS] --> B[Check User Account for Multiple IPs, Usernames, or High-Risk Email]
                 
                 %% High-Risk Email Check
@@ -60,7 +60,7 @@
                 Y --> Z{Does ID Match with Other Users?}
                 
                 Z -->|Yes| I[Ban All Accounts with Matching ID Permanently]
-                Z -->|No| F[Request KYC Verification: Selfie + ID + Gambi Paper]
+                Z -->|No| F[Request KYC Verification: Selfie with ID + Gambi Paper]
                 
                 %% Request and Verification of KYC
                 F --> G{Received KYC Submissions?}
@@ -70,27 +70,28 @@
                 
                 %% ID Verification Workflow for KYC Submissions
                 H -->|Yes, Matching IDs| I[Ban All Accounts Permanently]
-                H -->|No, IDs Do Not Match| J[Update User KYC Level to KYC 3 and Verify Information]
-            
-                %% KYC Level and Information Update
-                J --> K[If KYC1 Missing, Correct Name/Lastname in Admin Panel per Document]
-                K --> L[Proceed with Bonus Process]
+                H -->|No, IDs Do Not Match| J[Update User KYC Level to KYC 3]
+                
+                %% KYC Level Update Workflow
+                J --> K{Is KYC1 Information Complete?}
+                K -->|No| L[Correct User FirstName and LastName in Admin Panel per Document]
+                K -->|Yes| M[Proceed with Bonus Process]
                 
                 %% No Suspicious Activity Workflow
-                D -->|No| L[Proceed with Bonus Process]
+                D -->|No| M[Proceed with Bonus Process]
                 
                 %% Bonus Process Workflow
-                L --> M[Verify Promotion or Referral Code]
-                M --> N[Check User Eligibility]
-                N --> O{User Eligible for Bonus?}
+                M --> N[Verify Promotion or Referral Code]
+                N --> O[Check User Eligibility]
+                O --> P{User Eligible for Bonus?}
                 
-                O -->|Yes| P[Add Bonus to User Account]
-                O -->|No| Q[Inform User of Ineligibility]
+                P -->|Yes| Q[Add Bonus to User Account]
+                P -->|No| R[Inform User of Ineligibility]
             
                 %% Finalize and Close Inquiry
-                P --> R[Close Inquiry]
-                Q --> R
-                I --> R
+                Q --> T[Close Inquiry]
+                R --> T
+                I --> T
             
 
 
