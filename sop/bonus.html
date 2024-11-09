@@ -44,120 +44,63 @@
         <h2>Workflow Diagram</h2>
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
-                 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bonus Team SOP</title>
-    <link rel="stylesheet" href="../styles.css">
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({
-            startOnLoad: true,
-            themeVariables: {
-                fontSize: '12px',
-                fontFamily: 'Roboto, sans-serif',
-            },
-            flowchart: {
-                useMaxWidth: false
-            }
-        });
-    </script>
-</head>
-<body>
-    <header>
-        <div class="header-content">
-            <h1>Bonus Team SOP 🎁</h1>
-            <p>Guidelines for managing bonus programs, monitoring for abuse, and assisting CS agents with bonus inquiries.</p>
-            <button class="back-button" onclick="goBack()">🔙 Back to Dashboard</button>
-        </div>
-    </header>
-
-    <section class="sop-content">
-        <div class="sop-summary-wrapper">
-        <h2>Summary</h2>
-        <p class="sop-text">The Bonus Team SOP covers procedures for applying bonuses, detecting potential abuse, and verifying eligibility.</p>
-
-        <h3>Key Advice</h3>
-        <ul class="sop-text">
-            <li>Verify promotion details before adding bonuses.</li>
-            <li>Tag KYC Team if multiple accounts are suspected.</li>
-            <li>Assist CS with user inquiries related to specific promotions.</li>
-        </ul>
-        </div>
-
-        <h2>Workflow Diagram</h2>
-        <div class="flowchart-container">
-            <pre id="flowchartZoomContainer" class="mermaid">
                 flowchart TD
-                A[Receive Inquiry from CS] --> B[Check User Account for Multiple IPs, Usernames, or High-Risk Email]
-                
-                %% High-Risk Email Check
-                B --> X[Check High-Risk Emails at APIVoid: https://www.apivoid.com/tools/email-reputation-check/]
-                X --> C[Assess Account for Multiple IPs, Usernames, or High-Risk Email]
-                
-                %% Suspicious Activity Detected and Temporary Suspension
-                C --> D{Suspicious Activity Detected?}
-                D -->|Yes| S[Temporarily Suspend User Account / All Related Accounts]
-                S --> Y[Check if User Has Uploaded ID Document]
-                
-                %% ID Document Verification Workflow
-                Y --> Z{Does ID Match with Other Users?}
-                
-                Z -->|Yes| I[Ban All Accounts with Matching ID Permanently]
-                I --> V[Leave Remark: Confirmed Multi Abuser / Related Accounts Have Been Perma Banned, No Further Action Is Needed]
-                
-                Z -->|No| F[Request KYC Verification: Selfie with ID + Gambi Paper]
-                F --> U[Leave Remark: Multi / Promocode / Suspended / Selfie+ID+Gambi Requested]
-                
-                %% Request and Verification of KYC
-                U --> G{Received KYC Submissions?}
-                
-                G -->|Yes| H[Check if User IDs Match Across Accounts]
-                G -->|No| M[Inform User of Ineligibility Due to Missing KYC]
-                
-                %% ID Verification Workflow for KYC Submissions
-                H -->|Yes, Matching IDs| I
-                H -->|No, IDs Do Not Match| J[Update User KYC Level to KYC 3]
-                
-                %% KYC Level Update Workflow
-                J --> K{Is KYC1 Information Complete?}
-                K -->|No| L[Correct User FirstName and LastName in Admin Panel per Document]
-                K -->|Yes| M[Proceed with Bonus Process]
-                
-                %% No Suspicious Activity Workflow
-                D -->|No| M[Proceed with Bonus Process]
-                
-                %% Bonus Process Workflow
-                M --> N[Verify Promotion or Referral Code]
-                N --> O[Check User Eligibility]
-                O --> P{User Eligible for Bonus?}
-                
-                P -->|Yes| Q[Add Bonus to User Account]
-                P -->|No| R[Inform User of Ineligibility]
-            
-                %% Finalize and Close Inquiry
-                Q --> T[Close Inquiry]
-                R --> T
-                V --> T
-            
-
-            
-
+    A[Receive Inquiry from CS] --> B[Check User Account for Multiple IPs, Usernames, or High-Risk Email]
+    
+    %% High-Risk Email Check
+    B --> X[Check High-Risk Emails at IPQualityScore: https://www.ipqualityscore.com/user/email-verification-api/lookup]
+    X --> C[Assess Account for Multiple IPs, Usernames, or High-Risk Email]
+    
+    %% Suspicious Activity Detected and Temporary Suspension
+    C --> D{Suspicious Activity Detected?}
+    D -->|Yes| S[Temporarily Suspend User Account / All Related Accounts]
+    S --> Y[Check if User Has Uploaded ID Document]
+    
+    %% ID Document Verification Workflow
+    Y --> Z{Does ID Match with Other Users?}
+    
+    Z -->|Yes| I[Ban All Accounts with Matching ID Permanently]
+    I --> V[Leave Remark: Confirmed Multi Abuser / Related Accounts Have Been Perma Banned, No Further Action Is Needed]
+    
+    Z -->|No| F[Request KYC Verification: Selfie with ID + Gambi Paper]
+    F --> U[Leave Remark: Multi / Promocode / Suspended / Selfie+ID+Gambi Requested]
+    
+    %% Request and Verification of KYC
+    U --> G{Received KYC Submissions?}
+    
+    G -->|Yes| H[Check if User IDs Match Across Accounts]
+    G -->|No| W[Keep Account Suspended, No Bonus Provided]
+    
+    %% ID Verification Workflow for KYC Submissions
+    H -->|Yes, Matching IDs| I
+    H -->|No, IDs Do Not Match| J[Update User KYC Level to KYC 3]
+    
+    %% KYC Level Update Workflow
+    J --> K{Is KYC1 Information Complete?}
+    K -->|No| L[Correct User FirstName and LastName in Admin Panel per Document]
+    K -->|Yes| M[Proceed with Bonus Process]
+    
+    %% No Suspicious Activity Workflow
+    D -->|No| M[Proceed with Bonus Process]
+    
+    %% Bonus Process Workflow
+    M --> N[Verify Promotion or Referral Code]
+    N --> O[Check User Eligibility]
+    O --> P{User Eligible for Bonus?}
+    
+    P -->|Yes| Q[Add Bonus to User Account]
+    P -->|No| R[Inform User of Ineligibility]
+    
+    %% Finalize and Close Inquiry
+    Q --> T[Close Inquiry]
+    R --> T
+    V --> T
+    W --> T
 
             
             
-            
-            
-            </pre>
-        </div>
-    </section>
 
-    <script src="../script.js"></script>
-</body>
-</html>
-
+            
 
 
             
