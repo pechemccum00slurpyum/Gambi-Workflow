@@ -1,62 +1,157 @@
-// Back to Dashboard function
-function goBack() {
-    window.location.href = "../index.html";
+/* Root Variables for Dark Mode */
+:root {
+    --bg-color: #2c2f33;
+    --text-color: #dcddde;
+    --header-bg: #23272a;
+    --button-bg: #7289da;
+    --button-text: #ffffff;
+    --modal-bg: rgba(0, 0, 0, 0.9);
+    --card-bg: #36393f;
+    --accent-color: #5b6eae;
 }
 
-// Set up dragging and zoom functionality
-let scale = 1; // Initial scale for zoom
-let isPanning = false;
-let startX, startY;
-let translateX = 0, translateY = 0;
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-const flowchartContainer = document.getElementById("flowchartZoomContainer");
+/* Header Content */
+header {
+    background: var(--header-bg);
+    color: var(--button-text);
+    padding: 2em 0;
+    text-align: center;
+    width: 100%;
+}
 
-// Zoom in/out with mouse scroll
-flowchartContainer.addEventListener("wheel", (event) => {
-    event.preventDefault();
-    if (event.deltaY < 0) {
-        scale += 0.1; // Zoom in
-    } else {
-        scale = Math.max(0.5, scale - 0.1); // Zoom out with a minimum scale of 0.5
-    }
-    applyTransform();
-});
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 1em;
+    gap: 0.8em;
+}
 
-// Start panning on left mouse button down
-flowchartContainer.addEventListener("mousedown", (event) => {
-    if (event.button === 0) { // Left-click detection
-        isPanning = true;
-        startX = event.clientX;
-        startY = event.clientY;
-        flowchartContainer.style.cursor = 'grabbing'; // Change cursor when dragging
-    }
-});
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
 
-// Pan as mouse moves
-flowchartContainer.addEventListener("mousemove", (event) => {
-    if (!isPanning) return;
-    event.preventDefault();
-    const x = event.clientX - startX;
-    const y = event.clientY - startY;
-    translateX += x / scale; // Adjust panning speed based on current scale
-    translateY += y / scale;
-    startX = event.clientX;
-    startY = event.clientY;
-    applyTransform();
-});
+header p {
+    margin: 0;
+    font-size: 1.2em;
+    padding-bottom: 0.5em;
+}
 
-// Stop panning on mouse up or leave
-flowchartContainer.addEventListener("mouseup", () => {
-    isPanning = false;
-    flowchartContainer.style.cursor = 'grab'; // Reset cursor when not dragging
-});
+/* SOP Links on Dashboard */
+.sop-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2em;
+}
 
-flowchartContainer.addEventListener("mouseleave", () => {
-    isPanning = false;
-    flowchartContainer.style.cursor = 'grab'; // Reset cursor on leave
-});
+.sop-link {
+    display: inline-block;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    margin: 0.5em 0;
+    padding: 1em;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    transition: background 0.3s, transform 0.2s;
+}
 
-// Apply the current scale and translation values
-function applyTransform() {
-    flowchartContainer.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+.sop-link:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.sop-summary-wrapper {
+    background-color: var(--header-bg);
+    padding: 1em;
+    border-radius: 8px;
+}
+
+/* SOP Content Section */
+.sop-content {
+    padding: 2em;
+    width: 90%;
+    max-width: 1000px;
+    margin: 1.5em auto;
+    background: var(--card-bg);
+    border-radius: 8px;
+    text-align: left;
+}
+
+.sop-content h2,
+.sop-content h3 {
+    margin-left: 0.5em;
+}
+
+/* SOP Text - Left Align for Summary and Advice */
+.sop-text {
+    margin-left: 1.5em;
+    text-align: left;
+}
+
+
+/* Flowchart Container - Adjusted for Centered Padding */
+.flowchart-container {
+    overflow: hidden;
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+    padding: 1em; /* Add equal padding on left and right */
+    background-color: #dddddd; /* Slightly lighter shade */
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+
+.mermaid {
+    transform-origin: center center;
+    font-size: 2em;
+}
+
+/* Back Button Styling */
+.back-button {
+    padding: 0.8em 1.5em;
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 1em;
+}
+
+.back-button:hover {
+    background-color: var(--accent-color);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--text-color);
+    padding: 1em 0;
+    margin-top: auto;
+    width: 100%;
 }
