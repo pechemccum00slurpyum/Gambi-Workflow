@@ -44,43 +44,60 @@
         <h2>Workflow Diagram</h2>
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
-               flowchart TD
-    A[Receive Inquiry from CS] --> B[Check User Account for IP Country, IP Relations, Same Documents, Usernames, High-Risk Emails]
-    
-    B --> C{Any Matches Detected or High-Risk Indicators?}
-    
-    %% High-Risk or Match Detected Workflow
-    C -->|Yes| D[Investigate Potential Abuse Among Related Users]
-    D --> E{Is There Matching ID Across Related Users?}
-    
-    %% Permanent Ban for ID Match
-    E -->|Yes| F[Ban All Related Users Permanently; Document Reason in User's Notes]
-    
-    %% Temporary Ban and Document Verification for Non-ID Matches or High-Risk Indicators
-    E -->|No ID Match or High-Risk Indicators Only| G[Temporarily Suspend User; Request ID, Selfie, and Gambi Paper]
-    G --> H[User Submits Documentation]
-    H --> I[Review Submitted Documents]
-    
-    %% Final Decision Based on Document Check
-    I --> J{Does Submitted Document Match Any Other Related Users' ID?}
-    J -->|Yes| F
-    J -->|No| K[Allow User to Continue Usage of Account; Document Decision in User's Notes]
+                flowchart TD
+                A[Receive Inquiry from CS] --> B[Check User Account for Multiple IPs, Usernames, or High-Risk Email]
+                
+                %% High-Risk Email Check
+                B --> X[Check High-Risk Emails at APIVoid: https://www.apivoid.com/tools/email-reputation-check/]
+                X --> C[Assess Account for Multiple IPs, Usernames, or High-Risk Email]
+                
+                %% Suspicious Activity Detected and Temporary Suspension
+                C --> D{Suspicious Activity Detected?}
+                D -->|Yes| S[Temporarily Suspend User Account / All Related Accounts]
+                S --> Y[Check if User Has Uploaded ID Document]
+                
+                %% ID Document Verification Workflow
+                Y --> Z{Does ID Match with Other Users?}
+                
+                Z -->|Yes| I[Ban All Accounts with Matching ID Permanently]
+                Z -->|No| F[Request KYC Verification: Selfie + ID + Gambi Paper]
+                
+                %% Request and Verification of KYC
+                F --> G{Received KYC Submissions?}
+                
+                G -->|Yes| H[Check if User IDs Match Across Accounts]
+                G -->|No| M[Inform User of Ineligibility Due to Missing KYC]
+                
+                %% ID Verification Workflow for KYC Submissions
+                H -->|Yes, Matching IDs| I[Ban All Accounts Permanently]
+                H -->|No, IDs Do Not Match| J[Update User KYC Level to KYC 3 and Verify Information]
+            
+                %% KYC Level and Information Update
+                J --> K[If KYC1 Missing, Correct Name/Lastname in Admin Panel per Document]
+                K --> L[Proceed with Bonus Process]
+                
+                %% No Suspicious Activity Workflow
+                D -->|No| L[Proceed with Bonus Process]
+                
+                %% Bonus Process Workflow
+                L --> M[Verify Promotion or Referral Code]
+                M --> N[Check User Eligibility]
+                N --> O{User Eligible for Bonus?}
+                
+                O -->|Yes| P[Add Bonus to User Account]
+                O -->|No| Q[Inform User of Ineligibility]
+            
+                %% Finalize and Close Inquiry
+                P --> R[Close Inquiry]
+                Q --> R
+                I --> R
+            
 
-    %% No Matches or High-Risk Indicators Detected Workflow
-    C -->|No| L[No Abuse Detected; Allow User to Continue]
-    L --> M[Check Promotion Details]
-    M --> N[Check User Eligibility]
-    N --> O[Add Bonus According to Promotion/Referral Code]
 
-    %% Escalation for Uncertain Cases
-    B -->|Uncertain Case| P[Escalate to Higher Department for Further Review]
-
-    %% Outcome and Closure
-    F --> Q[Document Decision and Close Inquiry]
-    K --> Q
-    O --> Q
-    P --> Q
-
+            
+            
+            
+            
             </pre>
         </div>
     </section>
