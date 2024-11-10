@@ -36,7 +36,7 @@
         <h3>Key Advice</h3>
         <ul class="sop-text">
             <li>Verify promotion details before adding bonuses.</li>
-            <li>Tag KYC Team if multiple accounts are suspected.</li>
+            <li>Take necessary action if multiple accounts are suspected.</li>
             <li>Assist CS with user inquiries related to specific promotions.</li>
         </ul>
         </div>
@@ -62,8 +62,8 @@
     Z -->|Yes| I[Ban All Accounts with Matching ID Permanently]
     I --> V[Leave Remark: Confirmed Multi Abuser / Related Accounts Have Been Perma Banned, No Further Action Is Needed]
     
-    Z -->|No| F[Request KYC Verification: Selfie with ID + Gambi Paper]
-    F --> U[Leave Remark: Multi / Promocode / Suspended / Selfie+ID+Gambi Requested]
+    Z -->|No| F[Request KYC Verification: Selfie with ID + Gambi Paper. IMPORTANT: User To Fill Out KYC Level 1 Information if it's missing]
+    F --> U[Leave Remark: Multi / Suspended / Selfie+ID+Gambi Requested]
     
     %% Request and Verification of KYC
     U --> G{Received KYC Submissions?}
@@ -96,6 +96,7 @@
     R --> T
     V --> T
     W --> T
+
 
             
             
