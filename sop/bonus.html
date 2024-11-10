@@ -45,73 +45,50 @@
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
                 flowchart TD
-    A[Receive Inquiry from CS] --> B[Check User Account for Multiple IPs, Usernames, or High-Risk Email]
-    
-    %% High-Risk Email Check
-    B --> X[Check High-Risk Emails at IPQualityScore: https://www.ipqualityscore.com/user/email-verification-api/lookup]
-    X --> C[Assess Account for Multiple IPs, Usernames, or High-Risk Email]
-    
-    %% Suspicious Activity Detected and Temporary Suspension
-    C --> D{Suspicious Activity Detected?}
-    D -->|Yes| S[Temporarily Suspend User Account / All Related Accounts]
-    S --> Y[Check if User Has Uploaded ID Document]
-    
-    %% ID Document Verification Workflow
-    Y --> Z{Does ID Match with Other Users?}
-    
-    Z -->|Yes| I[Ban All Accounts with Matching ID Permanently]
-    I --> V[Leave Remark: Confirmed Multi Abuser / Related Accounts Have Been Perma Banned, No Further Action Is Needed]
-    
-    Z -->|No| F[Request KYC Verification: Selfie with ID + Gambi Paper. IMPORTANT: User To Fill Out KYC Level 1 Information if it's missing]
-    F --> U[Leave Remark: Multi / Suspended / Selfie+ID+Gambi Requested - Bonus Team]
-    
-    %% Request and Verification of KYC
-    U --> G{Received KYC Submissions?}
-    
-    G -->|Yes| H[Check if User IDs Match Across Accounts]
-    G -->|No| W[Keep Account Suspended, No Bonus Provided]
-    
-    %% ID Verification Workflow for KYC Submissions
-    H -->|Yes, Matching IDs| I
-    H -->|No, IDs Do Not Match| J[Update User KYC Level to KYC 3]
-    
-    %% KYC Level Update Workflow
-    J --> K{Is KYC1 Information Complete?}
-    K -->|No| L[Correct User FirstName and LastName in Admin Panel per Document]
-    K -->|Yes| M[Proceed with Bonus Process]
-    
-    %% No Suspicious Activity Workflow
-    D -->|No| M[Proceed with Bonus Process]
-    
-    %% Bonus Process Workflow
-    M --> N[Verify Promotion or Referral Code]
-    N --> O[Check User Eligibility]
-    O --> P{User Eligible for Bonus?}
-    
-    P -->|Yes| Q[Add Bonus to User Account]
-    P -->|No| R[Inform User of Ineligibility]
-    
-    %% Finalize and Close Inquiry
-    Q --> T[Close Inquiry]
-    R --> T
-    V --> T
-    W --> T
-
-
+                A[Receive Inquiry from CS] --> B[Check User Account for Multiple IPs, Usernames, or High-Risk Email]
+                
+                %% High-Risk Email Check
+                B --> X[Check High-Risk Emails at IPQualityScore: https://www.ipqualityscore.com/user/email-verification-api/lookup]
+                X --> C[Assess Account for Multiple IPs, Usernames, or High-Risk Email]
+                
+                %% Suspicious Activity Detected and Temporary Suspension
+                C --> D{Suspicious Activity Detected?}
+                D -->|Yes| S[Temporarily Suspend User Account / All Related Accounts]
+                
+                %% ID Document Check
+                S --> Y[Check if User Has Uploaded ID Document]
+                Y --> Z{ID Document Uploaded?}
+                
+                %% Branch Based on Document Upload Status
+                Z -->|Yes| AA[Check if ID Matches with Other Users]
+                AA --> AB{Does ID Match with Other Users?}
+                AB -->|Yes| I[Ban All Accounts with Matching ID Permanently]
+                AB -->|No| F[Request KYC Verification: Selfie with ID + Gambi Paper]
+                
+                Z -->|No| AC[Ask User to Upload ID Document via Gambi.com]
+                AC --> AD[Request ID + Selfie + Gambi Paper]
             
-            
-
-            
-
-
-            
-            
-            
-            
-            </pre>
-        </div>
-    </section>
-
-    <script src="../script.js"></script>
-</body>
-</html>
+                %% Updated Remarks after KYC Requests
+                F --> U[Leave Remark: Multi / Suspended / Selfie+ID+Gambi Requested or Multi / Suspended / KYC2 + Selfie+ID+Gambi Requested]
+                AD --> U
+                
+                %% Request and Verification of KYC
+                U --> G{Received KYC Submissions?}
+                
+                G -->|Yes| H[Check if User IDs Match Across Accounts]
+                G -->|No| W[Keep Account Suspended, No Bonus Provided]
+                
+                %% ID Verification Workflow for KYC Submissions
+                H -->|Yes, Matching IDs| I
+                H -->|No, IDs Do Not Match| N[Update User's KYC Level Accordingly]
+                
+                %% No Suspicious Activity Workflow
+                D -->|No| R[Add Bonus to User Account]
+                
+                %% Bonus Process Workflow
+                N --> O[Verify Promotion or Referral Code]
+                O --> R
+                
+                %% Finalize and Close Inquiry
+                R --> T[Close Inquiry]
+                W --> T
