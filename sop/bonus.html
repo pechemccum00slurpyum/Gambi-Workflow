@@ -45,53 +45,50 @@
         <div class="flowchart-container">
             <pre id="flowchartZoomContainer" class="mermaid">
                 flowchart TD
-                A[Receive Inquiry from CS] --> B[Check User Account for Multiple IPs, Usernames, or High-Risk Email]
-                
-                %% High-Risk Email Check
-                B --> X[Check High-Risk Emails at IPQualityScore: https://www.ipqualityscore.com/user/email-verification-api/lookup]
-                X --> C[Assess Account for Multiple IPs, Usernames, or High-Risk Email]
-                
-                %% Suspicious Activity Detected and Temporary Suspension
-                C --> D{Suspicious Activity Detected?}
-                D -->|Yes| S[Temporarily Suspend User Account / All Related Accounts]
-                
-                %% ID Document Check
-                S --> Y[Check if User Has Uploaded ID Document]
-                Y --> Z{ID Document Uploaded?}
-                
-                %% Branch Based on Document Upload Status
-                Z -->|Yes| AA[Check if ID Matches with Other Users]
-                AA --> AB{Does ID Match with Other Users?}
-                AB -->|Yes| I[Ban All Accounts with Matching ID Permanently]
-                AB -->|No| F[Request KYC Verification: Selfie with ID + Gambi Paper]
-                
-                Z -->|No| AC[Ask User to Upload ID Document via Gambi.com]
-                AC --> AD[Request ID + Selfie + Gambi Paper]
+    A[Receive Inquiry from CS] --> B[Check User Account for Multiple IPs, Usernames, or High-Risk Email]
+    
+    %% High-Risk Email Check
+    B --> X[Check High-Risk Emails at IPQualityScore: https://www.ipqualityscore.com/user/email-verification-api/lookup]
+    X --> C[Assess Account for Multiple IPs, Usernames, or High-Risk Email]
+    
+    %% Check Uploaded Documents
+    C --> Y[Check if User Has Uploaded ID Document]
+    Y --> Z{ID Document Uploaded?}
+    
+    %% Branch Based on Document Upload Status
+    Z -->|Yes| AA[Check if ID Matches with Other Users]
+    AA --> AB{Does ID Match with Other Users?}
+    AB -->|Yes| I[Ban All Accounts with Matching ID Permanently]
+    AB -->|No| F[Request KYC Verification: Selfie with ID + Gambi Paper]
+    
+    Z -->|No| AC[Ask User to Upload ID Document via Gambi.com]
+    AC --> AD[Request ID + Selfie + Gambi Paper]
+
+    %% Updated Remarks after KYC Requests
+    F --> U[Leave Remark: Multi / Suspended from bonuses / Selfie+ID+Gambi Requested / Bonus Team or Multi / Suspended from bonuses / KYC2 + Selfie+ID+Gambi Requested / Bonus Team]
+    AD --> U
+    
+    %% Request and Verification of KYC
+    U --> G{Received KYC Submissions?}
+    
+    G -->|Yes| H[Check if User IDs Match Across Accounts]
+    G -->|No| W[Keep Account Suspended, No Bonus Provided]
+    
+    %% ID Verification Workflow for KYC Submissions
+    H -->|Yes, Matching IDs| I
+    H -->|No, IDs Do Not Match| N[Update User's KYC Level Accordingly]
+    
+    %% Bonus Process Workflow
+    N --> O[Verify Promotion or Referral Code]
+    O --> R[Add Bonus to User Account]
+    
+    %% Finalize and Close Inquiry
+    R --> T[Close Inquiry]
+    W --> T
+
             
-                %% Updated Remarks after KYC Requests
-                F --> U[Leave Remark: Multi / Suspended / Selfie+ID+Gambi Requested or Multi / Suspended / KYC2 + Selfie+ID+Gambi Requested]
-                AD --> U
-                
-                %% Request and Verification of KYC
-                U --> G{Received KYC Submissions?}
-                
-                G -->|Yes| H[Check if User IDs Match Across Accounts]
-                G -->|No| W[Keep Account Suspended, No Bonus Provided]
-                
-                %% ID Verification Workflow for KYC Submissions
-                H -->|Yes, Matching IDs| I
-                H -->|No, IDs Do Not Match| N[Update User's KYC Level Accordingly]
-                
-                %% No Suspicious Activity Workflow
-                D -->|No| R[Add Bonus to User Account]
-                
-                %% Bonus Process Workflow
-                N --> O[Verify Promotion or Referral Code]
-                O --> R
-                
-                %% Finalize and Close Inquiry
-                R --> T[Close Inquiry]
-                W --> T
+            
+
             
             
 
