@@ -76,7 +76,7 @@
                 U --> G{Received KYC Submissions?}
                 
                 G -->|Yes| H[Check if User IDs Match Across Accounts]
-                G -->|No| W[Keep Account Suspended, No Bonus Provided]
+                G -->|No| V[No Bonus Provided, Account Remains Unsuspended]
                 
                 %% ID Verification Workflow for KYC Submissions
                 H -->|Yes, Matching IDs| I
@@ -88,7 +88,8 @@
                 
                 %% Finalize and Close Inquiry
                 R --> T[Close Inquiry]
-                W --> T
+                V --> T
+            
             
             </pre>
         </div>
