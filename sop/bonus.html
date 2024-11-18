@@ -63,7 +63,7 @@
                 Z -->|Yes| AA[Check if ID Matches with Other Users]
                 AA --> AB{Does ID Match with Other Users?}
                 AB -->|Yes| Q[Suspend All Other Accounts with Matching IDs]
-                Q --> W[Allow User to Keep Contacted Account but Do Not Provide Bonus. Eligible for Future Bonuses]
+                Q --> W[Allow User to Keep Contacted Account but Do Not Provide Current Bonus. Eligible for Future Bonuses]
                 W --> T[Close Inquiry]
                 AB -->|No| F[Request KYC Verification: Selfie with ID + Gambi Paper]
                 
@@ -78,7 +78,7 @@
                 %% Request and Verification of KYC
                 Y --> G{Received KYC Submissions?}
                 G -->|Yes| H[Check if User IDs Match Across Accounts]
-                G -->|No| V[No Bonus Provided, Account Remains Suspended]
+                G -->|No| V[Account Remains Restricted. Allow User to Withdraw Initial Deposit Amount]
                 
                 %% ID Verification Workflow for KYC Submissions
                 H -->|Yes, Matching IDs| Q
@@ -91,12 +91,6 @@
                 %% Finalize and Close Inquiry
                 R --> T[Close Inquiry]
                 V --> T
-            
-            
-
-            
-            
-            
             </pre>
         </div>
     </section>
