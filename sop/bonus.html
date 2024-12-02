@@ -78,7 +78,7 @@
                 %% Request and Verification of KYC
                 Y --> G{Received KYC Submissions?}
                 G -->|Yes| H[Check if User IDs Match Across Accounts]
-                G -->|No| V[Account Remains Restricted. Allow User to Withdraw Initial Deposit Amount]
+                G -->|No| V[Account Remains Restricted.]
                 
                 %% ID Verification Workflow for KYC Submissions
                 H -->|Yes, Matching IDs| Q
